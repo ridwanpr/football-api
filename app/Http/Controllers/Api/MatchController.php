@@ -79,4 +79,50 @@ class MatchController extends Controller
             'code' => 200
         ]);
     }
+
+    public function getMatchDetails(Request $request, $matchId)
+    {
+        $date = $request->query('date');
+        $dateFrom = $request->query('dateFrom');
+        $dateTo = $request->query('dateTo');
+        $status = $request->query('status');
+
+        $queryParams = [];
+        if ($date) {
+            $queryParams['date'] = $date;
+        }
+        if ($dateFrom) {
+            $queryParams['dateFrom'] = $dateFrom;
+        }
+        if ($dateTo) {
+            $queryParams['dateTo'] = $dateTo;
+        }
+        if ($status) {
+            $queryParams['status'] = $status;
+        }
+
+        $cacheKey = 'match_' . $matchId .
+            ($date ? '_date_' . $date : '') .
+            ($dateFrom ? '_dateFrom_' . $dateFrom : '') .
+            ($dateTo ? '_dateTo_' . $dateTo : '') .
+            ($status ? '_status_' . $status : '');
+
+        $match = Cache::get($cacheKey);
+
+        if (!$match) {
+            $response = Http::withHeaders([
+                'X-Auth-Token' => env('API_TOKEN'),
+            ])->get(env('BASE_API_URL') . "/matches/{$matchId}", $queryParams);
+
+            $responseBody = json_decode($response->body(), true);
+            Cache::put($cacheKey, $responseBody, now()->addMinutes(5));
+            $match = $responseBody;
+        }
+
+        return response()->json([
+            'match' => $match,
+            'status' => 'success',
+            'code' => 200
+        ]);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\TopScrorerController;
 use App\Http\Controllers\Api\CompetitionController;
 
 Route::get('matches/{leagueCode}', [MatchController::class, 'getMatches']);
+Route::get('match/{matchId}', [MatchController::class, 'getMatchDetails']);
 
 Route::get('areas', [AreaController::class, 'getAreas']);
 

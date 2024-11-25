@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AreaController;
+use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\MatchController;
 use App\Http\Controllers\Api\StandingController;
 use App\Http\Controllers\Api\TopScrorerController;
@@ -18,3 +19,5 @@ Route::get('competitions/{id}/teams', [CompetitionController::class, 'getCompeti
 Route::get('topscorer/{leagueCode}', [TopScrorerController::class, 'getTopScorer']);
 
 Route::get('standings/{leagueCode}', [StandingController::class, 'getStandings']);
+
+Route::get('teams/{teamId}', [TeamController::class, 'getTeam']);

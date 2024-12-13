@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,6 +31,18 @@ class TeamController extends Controller
             $team = $response->json();
             Cache::put($cacheKey, $team, now()->addMinutes(60));
         }
+
+        return response()->json([
+            'team' => $team,
+            'status' => 'success',
+            'code' => 200
+        ]);
+    }
+
+    public function searchTeam(Request $request)
+    {
+        $teamName = $request->teamName;
+        $team = DB::table('teams')->where('name', 'like', "%{$teamName}%")->get();
 
         return response()->json([
             'team' => $team,

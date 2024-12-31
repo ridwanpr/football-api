@@ -27,5 +27,3 @@ Route::get('teams/{teamId}', [TeamController::class, 'getTeam']);
 Route::get('persons/{personId}', [PersonController::class, 'getPerson']);
 
 Route::get('search', [TeamController::class, 'searchTeam']);
-
-Route::get('players', [PlayerController::class, 'getPlayers']);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PersonController;
 use App\Http\Controllers\Api\StandingController;
 use App\Http\Controllers\Api\TopScrorerController;
 use App\Http\Controllers\Api\CompetitionController;
+use App\Http\Controllers\Api\PlayerController;
 
 Route::get('matches/{leagueCode}', [MatchController::class, 'getMatches']);
 Route::get('match/{matchId}', [MatchController::class, 'getMatchDetails']);
@@ -26,3 +27,5 @@ Route::get('teams/{teamId}', [TeamController::class, 'getTeam']);
 Route::get('persons/{personId}', [PersonController::class, 'getPerson']);
 
 Route::get('search', [TeamController::class, 'searchTeam']);
+
+Route::get('players', [PlayerController::class, 'getPlayers']);
